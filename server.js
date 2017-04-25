@@ -3,7 +3,17 @@ var fortune = require('./lib/fortune.js');
 var app = express();
 
 var handlebars = require('express-handlebars')
-    .create({ defaultLayout:'main'});
+    .create({
+        defaultLayout:'main',
+        // extname: '.hbs',
+        helpers: {
+            section: function(name, options){
+                if(!this._sections) this._sections = {};
+                this._sections[name] = options.fn(this);
+                return null;
+            }
+        }
+    });
 
 
 app.engine('handlebars', handlebars.engine);
@@ -75,6 +85,22 @@ app.get('/tours/hood-river', function(req, res) {
 
 app.get('/tours/request-group-rate', function(req, res) {
     res.render('tours/request-group-rate');
+});
+
+app.get('/jquery-test', function(req, res){
+    res.render('jquery-test');
+});
+
+app.get('/nursery-rhyme', function(req, res){
+    res.render('nursery-rhyme');
+});
+app.get('/data/nursery-rhyme', function(req, res){
+    res.json({
+        animal: 'squirrel',
+        bodyPart: 'tail',
+        adjective: 'bushy',
+        noun: 'heck',
+    });
 });
 
 // 404 catch-all handler (middleware)
