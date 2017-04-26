@@ -27,12 +27,16 @@ var credentials = require('./credentials');
 
 app.use(require('cookie-parser')(credentials.coockieSecret));
 // session
-app.use(require('express-session')({
+app.use(require('express-session')());
+/*app.use(require('express-session')({
     resave: false,
     saveUninitialize: false,
     secret: credentials.coockieSecret
-}));
+}));*/
 
+
+// body-parser
+app.use(require('body-parser')());
 
 
 // middleware
@@ -169,9 +173,6 @@ app.get('/data/nursery-rhyme', function(req, res){
     });
 });
 
-
-// body-parser
-app.use(require('body-parser')());
 
 
 app.get('/thank-you', function(req, res){
